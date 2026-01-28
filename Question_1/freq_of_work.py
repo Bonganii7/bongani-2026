@@ -2,37 +2,38 @@ from collections import Counter
 from typing import List
 
 class WordFreq:
-    """
-    Maintain the top N most frequent words in a streaming fashion.
-    Args:
-        n (int): number of top frequent words to track (default = 10)
-    """
+
     def __init__(self,n: int = 10):
         self.n = n
         self.counts = Counter()
+    """
+    
+    """
+
 
     def process(self, word: str) -> None:
-        """
-        Process a single word and update the internal frequency counts.
-        Args:
-            word(str): the word to process
-        """
+
         cleaned = word.strip().lower()
         if cleaned:
             self.counts[cleaned] += 1
 
-    def top(self) -> List[str]:
+
+    def top_n_words(self) -> List[str]:
         """
-        Return only the top N words
+        we will return only the top n words as list therefore, strings!
         """
-        return [w for w, _ in self.counts.most_common(self.n)]
+        result = []
+        pairs = self.counts.most_common(self.n) # get word and count pairs here kinda like [('luminosity', 5), ('protons', 2)]
+        for (word,count) in pairs:
+            result.append(word)
+        return result
+
+
 
     def top_with_counts(self) -> List[tuple]:
-        """
-        Return the top N words along with their counts.
-        Useful for debugging and interviews.
-        """
+
         return self.counts.most_common(self.n)
+
 
 
 
